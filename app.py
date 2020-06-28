@@ -15,16 +15,20 @@ app.config['MONGO_DBNAME'] = os.environ.get('MONGO_DBNAME')
 app.config['MONGO_URI'] = os.getenv('MONGO_URI')
 
 mongo = PyMongo(app)  # create an instance of PyMongo
-coll = mongo.db.tasks
+coll_tasks = mongo.db.tasks
+coll_cats = mongo.db.categories
 
 @app.route('/')
 @app.route('/get_tasks')
 def get_tasks():
     # redirect to existing template called tasks.html and call everything in tasks collection from mongo
-    return render_template("tasks.html", tasks=coll.find())
+    return render_template("tasks.html", tasks=coll_tasks.find())
+
 
 @app.route('/add_task')
 def add_tasks():
-    return render_template("addtasks.html")
+    return render_template("addtasks.html", categories=coll_cats.find())
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get('IP'), port=int(os.environ.get('PORT')), debug=True)
