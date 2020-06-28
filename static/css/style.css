@@ -5,8 +5,9 @@ h1 {
     color: white;
 }
 
-.task_header {
-    margin-left: 15px;
+.tasks-header {
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .btn_small {
