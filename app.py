@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 """ get env.py file for keys/URIs"""
@@ -16,11 +16,7 @@ app.config['MONGO_URI'] = os.getenv('MONGO_URI')
 
 mongo = PyMongo(app)  # create an instance of PyMongo
 
-
 @app.route('/')
-def hello():
-    return 'hello world'
-
 @app.route('/get_tasks')
 def get_tasks():
     return 'here are your tasks!'
