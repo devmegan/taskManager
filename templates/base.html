@@ -22,11 +22,14 @@
         $(document).ready(function(){
                 /* fire accordion */
                 $('.collapsible').collapsible();
-                
+                /*fire task category selector*/
+                     $('select').material_select();
                 /* fire datepicker */
+     
                 $('.datepicker').pickadate({
                     selectMonths: true, // Creates a dropdown to control month
-                    selectYears: 15, // Creates a dropdown of 15 years to control year,
+                    selectYears: '2', // Creates a dropdown of 15 years to control year,
+                    minDate: 'now',
                     today: 'Today',
                     clear: 'Clear',
                     close: 'Ok',
@@ -39,7 +42,6 @@
                 document.getElementById("matfix").addEventListener("click", function(e) {
                     e.stopPropagation();
                 });
-                
         });
     </script>
 </body>
