@@ -30,5 +30,11 @@ def add_tasks():
     return render_template("addtasks.html", categories=coll_cats.find())
 
 
+@app.route('/adding_task', methods=['POST'])
+def insert_task():
+    coll_tasks.insert_one(request.form.to_dict())  # form submitted as request object, so we send the request to a new task as a dictionary
+    return redirect(url_for('get_tasks'))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get('IP'), port=int(os.environ.get('PORT')), debug=True)
