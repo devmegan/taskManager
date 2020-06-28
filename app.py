@@ -23,6 +23,8 @@ def get_tasks():
     # redirect to existing template called tasks.html and call everything in tasks collection from mongo
     return render_template("tasks.html", tasks=coll.find())
 
-
+@app.route('/add_task')
+def add_tasks():
+    return render_template("addtasks.html")
 if __name__ == "__main__":
     app.run(host=os.environ.get('IP'), port=int(os.environ.get('PORT')), debug=True)
