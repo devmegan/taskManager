@@ -12,11 +12,35 @@
     <title>Task Manager</title>
 </head>
 <body>
-    <h1>Manage your Tasks</h1>
+    <h1>Task Manager</h1>
     {% block content %}
     {% endblock %}
     
     <!--load materialize js-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function(){
+                /* fire accordion */
+                $('.collapsible').collapsible();
+                
+                /* fire datepicker */
+                $('.datepicker').pickadate({
+                    selectMonths: true, // Creates a dropdown to control month
+                    selectYears: 15, // Creates a dropdown of 15 years to control year,
+                    today: 'Today',
+                    clear: 'Clear',
+                    close: 'Ok',
+                    closeOnSelect: false,// Close upon selecting a date,
+                });
+                /* bug fixes for materialize datepicker */ 
+                $('.datepicker').on('mousedown',function(event){
+                    event.preventDefault();
+                })
+                document.getElementById("matfix").addEventListener("click", function(e) {
+                    e.stopPropagation();
+                });
+                
+        });
+    </script>
 </body>
 </html>
