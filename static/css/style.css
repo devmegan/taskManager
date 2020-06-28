@@ -4,3 +4,16 @@ body {
 h1 {
     color: white;
 }
+
+.task_header {
+    margin-left: 15px;
+}
+
+.btn_small {
+    height: 30px;
+    line-height: 30px;
+    margin: 5px;
+    width: 30px;
+    text-align: center;
+    padding: 0px;
+}
