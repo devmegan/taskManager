@@ -18,6 +18,7 @@ mongo = PyMongo(app)  # create an instance of PyMongo
 coll_tasks = mongo.db.tasks
 coll_cats = mongo.db.categories
 
+
 @app.route('/')
 @app.route('/get_tasks')
 def get_tasks():
@@ -27,14 +28,26 @@ def get_tasks():
 
 @app.route('/add_task')
 def add_tasks():
+    """ allow user to add new task """
     return render_template("addtasks.html", categories=coll_cats.find())
 
 
-@app.route('/adding_task', methods=['POST'])
+@app.route('/insert_task', methods=['POST'])
 def insert_task():
+    """ insert the new task into mongodb """
     coll_tasks.insert_one(request.form.to_dict())  # form submitted as request object, so we send the request to a new task as a dictionary
     return redirect(url_for('get_tasks'))
 
 
+@app.route('/edit_task/<task_id>')  # edit_task recieves task_id as part of its routing parameter
+def edit_task(task_id):
+    """ display task in editable form and allow user to edit """
+    task_to_fetch = coll_tasks.find_one({"_id": ObjectId(task_id)})  # convert task id into bson, then find id in mongo db that matches it
+    all_categories = coll_cats.find()
+    return render_template("edittask.html", task=task_to_fetch, categories=all_categories)
+
+
 if __name__ == "__main__":
-    app.run(host=os.environ.get('IP'), port=int(os.environ.get('PORT')), debug=True)
+    app.run(host=os.environ.get('IP'),
+        port=int(os.environ.get('PORT')),
+        debug=True)
