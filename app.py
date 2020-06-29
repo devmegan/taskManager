@@ -60,10 +60,31 @@ def update_task(task_id):
     })
     return redirect(url_for('get_tasks'))
 
+
 @app.route('/delete_task/<task_id>')
 def delete_task(task_id):
     coll_tasks.remove({'_id': ObjectId(task_id)})
     return redirect(url_for('get_tasks'))
+
+
+@app.route('/categories')
+def get_categories():
+    return render_template('categories.html', categories=coll_cats.find())
+
+
+@app.route('/edit_category/<category_id>')
+def edit_category(category_id):
+    cat_to_fetch = coll_cats.find_one({"_id": ObjectId(category_id)})
+    return render_template("editcategory.html", category=cat_to_fetch)
+
+
+@app.route('/update_category/<category_id>', methods=['POST'])
+def update_category(category_id):
+    coll_cats.update(
+        {'_id': ObjectId(category_id)},
+        {'category_name': request.form.get('category_name')})
+    return redirect(url_for('get_categories'))
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get('IP'),
