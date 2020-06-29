@@ -47,6 +47,21 @@ def edit_task(task_id):
     return render_template("edittask.html", task=task_to_fetch, categories=all_categories)
 
 
+@app.route('/updating_task/<task_id>', methods=["POST"])  # post hides values from url bar when being sent
+def update_task(task_id):
+    coll_tasks.update( {'_id': ObjectId(task_id)},
+    {
+        # fetch values from the edit task form to send across
+        'task_name':request.form.get('task_name'),
+        'category_name':request.form.get('category_name'),
+        'task_description': request.form.get('task_description'),
+        'due_date': request.form.get('due_date'),
+        'is_urgent':request.form.get('is_urgent')
+    })
+    return redirect(url_for('get_tasks'))
+
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get('IP'),
         port=int(os.environ.get('PORT')),
