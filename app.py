@@ -85,6 +85,19 @@ def update_category(category_id):
         {'category_name': request.form.get('category_name')})
     return redirect(url_for('get_categories'))
 
+@app.route('/add_category')
+def add_category():
+    """ allow user to add new task """
+    return render_template("addcategory.html", categories=coll_cats.find())
+
+
+@app.route('/insert_category', methods=['POST'])
+def insert_category():
+    """ insert the new category into mongodb """
+    coll_cats.insert_one(category_doc)  # form submitted as doc
+    return redirect(url_for('get_categories'))
+
+
 @app.route('/delete_category/<category_id>')
 def delete_category(category_id):
     coll_cats.remove({'_id': ObjectId(category_id)})
